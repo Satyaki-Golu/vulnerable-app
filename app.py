@@ -98,13 +98,18 @@ if st.session_state.logged_in:
         if multiplier > 500: # Threshold set to simulate severe impact
             st.session_state.is_hacked = True
             
-            # Simulate artificial application lag/freezing up the thread
+            # Simulate artificial application lag freezing up the thread
             with st.spinner("Processing massive database payload... App lagging heavily..."):
                 time.sleep(5) 
                 
             st.error("🚨 WEBSITE HACKED: MEMORY EXHAUSTION DETECTED 🚨")
-            st.write("Shutting down the server instance safely...")
+            st.write("Render container process terminating...")
+            
+            # Force a re-render so the UI updates for the user before the exit command executes
             time.sleep(2)
+            
+            # Automatically close the application process
+            os._exit(1) #
             
             # Automatically close the application process gracefully
             os._exit(0) 
